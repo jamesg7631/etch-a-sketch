@@ -7,10 +7,9 @@ function main() {
 function changeGridSize() {
   const gridSizeInputField = document.querySelector(".change-grid-size-form");
   const changeGridSizeBtn = document.querySelector(".change-grid-size-btn");
-  changeGridSizeBtn.addEventListener(
-    "click",
-    createGrid(gridSizeInputField.value),
-  );
+  changeGridSizeBtn.addEventListener("click", () => {
+    createGrid(gridSizeInputField.value);
+  });
 }
 
 function createGrid(n) {
