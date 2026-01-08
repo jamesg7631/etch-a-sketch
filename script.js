@@ -1,11 +1,16 @@
 function main() {
-  const INITIAl_SIZE = 16;
+  const INITIAl_SIZE = 1;
   createGrid(INITIAl_SIZE);
-  const gridItemList = document.querySelectorAll(".grid-item");
-  // Try mouseover and mouseenter so I can see the difference. Sounds like mouseenter is what I want
-  gridItemList.forEach((gridItem) => {
-    gridItem.addEventListener("mouseenter", (e) => pixelateGridItem(e.target));
-  });
+  changeGridSize();
+}
+
+function changeGridSize() {
+  const gridSizeInputField = document.querySelector(".change-grid-size-form");
+  const changeGridSizeBtn = document.querySelector(".change-grid-size-btn");
+  changeGridSizeBtn.addEventListener(
+    "click",
+    createGrid(gridSizeInputField.value),
+  );
 }
 
 function createGrid(n) {
@@ -19,6 +24,11 @@ function createGrid(n) {
     gridItem.style.flex = flexProperty;
     gridContainer.append(gridItem);
   }
+  const gridItemList = document.querySelectorAll(".grid-item");
+  // Try mouseover and mouseenter so I can see the difference. Sounds like mouseenter is what I want
+  gridItemList.forEach((gridItem) => {
+    gridItem.addEventListener("mouseenter", (e) => pixelateGridItem(e.target));
+  });
 }
 
 function pixelateGridItem(e) {
