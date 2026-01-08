@@ -8,16 +8,25 @@ function changeGridSize() {
   const gridSizeInputField = document.querySelector(".change-grid-size-form");
   const changeGridSizeBtn = document.querySelector(".change-grid-size-btn");
   changeGridSizeBtn.addEventListener("click", () => {
-    removeGrid();
-    createGrid(gridSizeInputField.value);
+    let size = parseInt(gridSizeInputField.value);
+    if (isNaN(size) || size <= 0) {
+      alert("Please enter a number greater than 0");
+    } else if (size > 100) {
+      alert("Maximum size is 100. Setting to 100 for you!");
+      size = 100;
+      gridSizeInputField.value = size;
+      removeGrid();
+      createGrid(size);
+    } else {
+      removeGrid();
+      createGrid(size);
+    }
   });
 }
 
 function removeGrid() {
-  const gridItemList = document.querySelectorAll(".grid-item");
-  const gridItemVisited = document.querySelectorAll(".grid-item-visited");
-  gridItemList.forEach((item) => item.remove());
-  gridItemVisited.forEach((item) => item.remove());
+  const gridContainer = document.querySelector(".grid-container");
+  gridContainer.innerHTML = "";
 }
 
 function createGrid(n) {
@@ -31,15 +40,16 @@ function createGrid(n) {
     gridItem.style.flex = flexProperty;
     gridContainer.append(gridItem);
   }
-  const gridItemList = document.querySelectorAll(".grid-item");
   // Try mouseover and mouseenter so I can see the difference. Sounds like mouseenter is what I want
-  gridItemList.forEach((gridItem) => {
-    gridItem.addEventListener("mouseenter", (e) => pixelateGridItem(e.target));
+  gridContainer.addEventListener("mouseover", (e) => {
+    if (e.target.classList.contains("grid-item")) {
+      pixelateGridItem(e.target);
+    }
   });
 }
 
 function pixelateGridItem(e) {
-  e.className = "grid-item-visited";
+  e.classList.add("grid-item-visited");
 }
 
 main();

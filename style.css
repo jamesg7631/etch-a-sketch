@@ -5,7 +5,8 @@
 }
 body {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
 }
 
 .grid-container {
@@ -17,11 +18,11 @@ body {
 }
 
 .grid-item {
-  background-color: blue;
-  border: 4px solid red;
+  background-color: white;
+  border: 0.1px solid black;
 }
 
 .grid-item-visited {
-  background-color: red;
-  border: 4px solid blue;
+  background-color: black;
+  border: none;
 }
