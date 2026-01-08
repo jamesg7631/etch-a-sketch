@@ -10,7 +10,13 @@
   <body>
     <div class="size-change-container">
       <span>Change Grid Size: </span>
-      <input class="change-grid-size-form" />
+      <input
+        class="change-grid-size-form"
+        min="0"
+        max="100"
+        step="1"
+        type="number"
+      />
       <button class="change-grid-size-btn">Change grid Size</button>
     </div>
     <div class="grid-container"></div>

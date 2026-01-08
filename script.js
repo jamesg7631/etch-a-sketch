@@ -1,5 +1,5 @@
 function main() {
-  const INITIAl_SIZE = 1;
+  const INITIAl_SIZE = 16;
   createGrid(INITIAl_SIZE);
   changeGridSize();
 }
@@ -8,8 +8,16 @@ function changeGridSize() {
   const gridSizeInputField = document.querySelector(".change-grid-size-form");
   const changeGridSizeBtn = document.querySelector(".change-grid-size-btn");
   changeGridSizeBtn.addEventListener("click", () => {
+    removeGrid();
     createGrid(gridSizeInputField.value);
   });
+}
+
+function removeGrid() {
+  const gridItemList = document.querySelectorAll(".grid-item");
+  const gridItemVisited = document.querySelectorAll(".grid-item-visited");
+  gridItemList.forEach((item) => item.remove());
+  gridItemVisited.forEach((item) => item.remove());
 }
 
 function createGrid(n) {
