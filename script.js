@@ -24,6 +24,51 @@ function changeGridSize() {
   });
 }
 
+function generateRandomHue(currentLightness = 0) {
+  const hue = Math.random() * 360;
+  const saturation = Math.random() * 100;
+  const lightness = currentLightness + 10;
+  // do i need a ; after$)?
+  return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
+}
+
+function convertRGBToHue(rgbString) {
+  const removePrefix = rgbString.split("(");
+  const removeSuffix = removePrefix.at(1).replace(")", "");
+  const rgbListString = removeSuffix.split(",");
+  const rgbListIntegers = rgbListString.map((value) => parseInt(value));
+  console.log(`RGB Values: ${rgbListIntegers}`);
+  const red = 255 / rgbListIntegers.at(0);
+  const green = 255 / rgbListIntegers.at(1);
+  const blue = 255 / rgbListIntegers.at(2);
+  const rgbDict = {};
+  rgbDict[red] = "red";
+  rgbDict[green] = "green";
+  rgbDict[blue] = "blue";
+  maxValue = Math.max(red, green, blue);
+  minValue = Math.min(red, green, blue);
+  d = maxValue - minValue;
+
+  let hue;
+  if (d !== 0) {
+    let color = rgbDict[maxValue];
+    if (color === "red") {
+      hue = 60 * (((green - blue) / d) % 6);
+    } else if (color === "green") {
+      hue = 60 * ((blue - green) / d + 2);
+    } else if (color === "blue") {
+      hue = 60 * ((red - green) / d + 4);
+    }
+  } else {
+    hue = 0;
+  }
+
+  if (hue < 0) {
+    hue += 360;
+  }
+  return hue;
+}
+
 function removeGrid() {
   const gridContainer = document.querySelector(".grid-container");
   gridContainer.innerHTML = "";
@@ -49,7 +94,11 @@ function createGrid(n) {
 }
 
 function pixelateGridItem(e) {
-  e.classList.add("grid-item-visited");
+  // e.classList.add("grid-item-visited");
+  const actualColor = window.getComputedStyle(e).backgroundColor;
+  const currentHue = convertRGBToHue(actualColor);
+  const newHSL = generateRandomHue(currentHue);
+  e.style.backgroundColor = newHSL;
 }
 
 main();
