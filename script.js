@@ -83,6 +83,8 @@ function createGrid(n) {
     const gridItem = document.createElement("div");
     gridItem.className = "grid-item";
     gridItem.style.flex = flexProperty;
+    gridItem.dataset.interactions = "0";
+    gridItem.style.backgroundColor = "black";
     gridContainer.append(gridItem);
   }
   // Try mouseover and mouseenter so I can see the difference. Sounds like mouseenter is what I want
@@ -95,10 +97,18 @@ function createGrid(n) {
 
 function pixelateGridItem(e) {
   // e.classList.add("grid-item-visited");
-  const actualColor = window.getComputedStyle(e).backgroundColor;
-  const currentHue = convertRGBToHue(actualColor);
-  const newHSL = generateRandomHue(currentHue);
-  e.style.backgroundColor = newHSL;
+  if (e.dataset.interactions === "0") {
+    const randomR = Math.floor(Math.random() * 256);
+    const randomG = Math.floor(Math.random() * 256);
+    const randomB = Math.floor(Math.random() * 256);
+    e.style.backgroundColor = `rgb(${randomR}, ${randomG}, ${randomB}`;
+  }
+  let currentInteractions = parseInt(e.dataset.interactions);
+  if (currentInteractions < 10) {
+    currentInteractions++;
+    e.dataset.interactions = currentInteractions;
+  }
+  e.style.opacity = currentInteractions * 0.1;
 }
 
 main();
